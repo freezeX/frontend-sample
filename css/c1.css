@@ -1,0 +1,148 @@
+/*css*/
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+img {
+    position: relative;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+.my{
+    border-bottom: 2px solid #e1e3df;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#logo{
+    float: left;
+    padding-right: 5px;
+}
+
+
+
+
+
+.sbutton{
+    float:left;
+    height: 34px;
+    width: 80px;
+    background: #222222;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+}
+
+.searchbox{
+    float:left;
+    width: 200px;
+    top: 50%;
+    border: 1px solid #CFCBC8;
+    background: #f9f9f8;
+    margin-top: 0px;
+    padding: 6px 10px;
+    margin-left: 0;
+    height: 34px;
+    font-size: 14px;
+    box-sizing: border-box;
+    box-shadow: inset 0 1px 2px #E9E9E8, 0 0 0 1000px #fbfbfa inset;
+
+}
+
+
+
+#hiddensearch{
+    width: 85%;
+}
+#hiddenbutton{
+    width: 15%;
+}
+
+
+ul{
+    padding-left: 1px;
+    float:right;
+    list-style-type: none;
+    padding-top: 5px;
+    padding-inline-start: 40px;
+    margin-bottom: 0;
+}
+ul li{
+    display: inline;
+    padding-right: 8px;
+    line-height: 16px;
+    font-size: 14px;
+}
+ul li button{
+    box-sizing: border-box;
+    border: 1px solid gray;
+    border-radius: 6px;
+    padding: 8px;
+}
+#message{
+    width: 100%;
+}
+
+#message h1{
+    text-align: center;
+    font-size: 32px;
+    line-height: 36px;
+    padding-top: 30px;
+    padding-bottom: 9px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+
+
+.j1{
+    background:#a31b30;
+    color:#ffffff;
+    text-align: center
+}
+
+#banner3{
+    margin-bottom: 0;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 12px;
+    padding-left: 12px;
+}
+
+
+
+#banner2{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 130px;
+    padding-right: 40%;
+    margin-bottom: 16px;
+
+    background-image: url("etsy3.jpg");
+    background-color: #17234E;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+#myul{
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 0px;
+
+}
+
+#myul li{
+    text-align: center;
+    padding:10px;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+

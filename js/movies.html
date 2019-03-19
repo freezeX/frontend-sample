@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel ="stylesheet" href="movies.css">
+    <title>Movies</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="/">Movies</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="my-2 my-lg-0 d-flex w-100" id="searchForm">
+          <div class="input-group">
+            <input id="search" autofocus class="form-control mr-sm-2" type="search" placeholder="Search by title...">
+          </div>
+        </form>
+      </div>
+    </nav>
+
+
+    <div class="container-fluid base">
+      <div class="row " id = "entries">
+      </div>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    
+    <script>
+      const tmdb_api_key = "bde024f3eb43f597aafe01ed9c9098c6";
+      document.getElementById('search').focus();
+
+      document.querySelector('#searchForm').addEventListener('submit',
+        search)
+
+      function search(event){
+        entries = document.querySelector("#entries")
+        entries.innerHTML = '';
+        event.preventDefault()
+        var s = document.querySelector('#search').value
+        s = s.trim().split(" ")
+        s = s.join("+")
+        fetch("https://api.themoviedb.org/3/search/movie?api_key="+tmdb_api_key+"&query="+s)
+        .then(response =>response.json())
+        .then(data => parseJson(data))
+        .then(results => generateEntry(results))
+      }
+      function parseJson(data){
+        results = data.results
+        console.log(results)
+        return results
+      }
+      function generateEntry(results){
+        for (var i=0;i<results.length;i++){
+          result = results[i]
+          promise1 = Promise.resolve(result)
+          promise2 = fetch("https://api.themoviedb.org/3/movie/"+result.id+"/credits?api_key="+tmdb_api_key)
+          .then(response => response.json())
+          Promise.all([promise1,promise2])
+          .then(data => editElement(data))
+        }
+      }
+      function editElement(data){
+        result = data[0]
+        credit = data[1]
+        image_address= result.poster_path
+        if (image_address==null){
+          return
+        }
+        title = result.original_title
+        overview = result.overview
+        date = result.release_date
+        vote = result.vote_average.toFixed(1)
+        entries = document.querySelector("#entries")
+        cast = credit.cast
+        console.log(credit)
+        crew = credit.crew
+
+        htmlstr =`<div class="col-12 entry wBorder">
+          <div class="col-xs-4 col-md-3 pic-col">
+            <img src="https://image.tmdb.org/t/p/w500/${image_address}" class="img-thumbnail pic" alt="Responsive image">
+            <div class = "d-sm-none" >
+              <h5 style="text-align:center;">${title}</h5>
+                <p class="ml-4 resText"> Released: ${date}</p>
+                <p class="ml-4 resText" >IMDB ${vote}</p> 
+            </div> 
+              
+          </div>
+          <div class="col-xs-8 col-md-9 text-col" style="height: 100%">
+            <div class="col-12 d-none d-sm-block" style="height: 15%">
+              <h3 style="float: left"><span>${title}</span></h3>
+              <span class="ml-4 resText" style="float: right;">Released: ${date}</span>
+              <span class="ml-4 resText" style="float:right">IMDB ${vote}</span> 
+              
+            </div>
+            <div class="col-12">
+              <p class="resText">${overview}</p>
+            </div>
+            <div class="col-12" style="height: 10%">
+              <p class="resText">Actor: ${showCast(cast)}</p>
+              <p class="resText">Director: ${findDirector(crew)}</p>
+            </div>
+          </div>
+        </div>`
+        entries.insertAdjacentHTML('beforeend',htmlstr)
+      }
+      function showCast(casts){
+        casts = casts.slice(0,5)
+        ret = []
+        for (var i=0;i<casts.length;i++){
+          ret.push(casts[i].name)
+        }
+        return ret
+      }
+      function findDirector(crews){
+        for (var i=0;i<crews.length;i++){
+          if (crews[i].job =='Director'){
+            return crews[i].name
+          }
+        }
+      }
+      
+
+    </script>
+    
+
+  </body>
+</html>
